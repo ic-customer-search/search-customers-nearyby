@@ -6,7 +6,7 @@ from utils.logging import get_logger
 logger = get_logger(__name__)
 
 
-def download_file(url: str) -> requests.models.Response:
+def download_file(url: str) -> str:
     if not is_url_valid(url):
         raise Exception("URL is not valid")
     try:
@@ -14,7 +14,7 @@ def download_file(url: str) -> requests.models.Response:
         response = requests.get(url)
         if not response.ok:
             raise (Exception("Response incorrect"))
-        return response
+        return str(response.content)
     except Exception as e:
         logger.error("Error downloading file. %s" % (e,))
         raise e
