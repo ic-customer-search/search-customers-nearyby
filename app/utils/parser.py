@@ -7,12 +7,11 @@ from utils.logging import get_logger
 logger = get_logger(__name__)
 
 
-def parse_json_from_string(stringified_json: str) -> dict:
-    return json.loads(stringified_json)
-
-
-def parse_customer_records(customer_record_text: str) -> list:
-    records = customer_record_text.split("\n")
+def parse_customer_records(customer_records_text: str) -> list:
+    """
+    Parse a blob of string for customer records. Customer records are expected to be delimited by new line character
+    """
+    records = customer_records_text.split("\n")
     parsed = []
     try:
         for record in records:
@@ -23,3 +22,7 @@ def parse_customer_records(customer_record_text: str) -> list:
         logger.error("Parsing of customer records failed.")
         logger.error(exception_to_str(e))
         raise InvalidFormatException
+
+
+def parse_json_from_string(stringified_json: str) -> dict:
+    return json.loads(stringified_json)

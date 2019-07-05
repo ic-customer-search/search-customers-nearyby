@@ -9,6 +9,9 @@ logger = get_logger(__name__)
 
 
 def download_file(url: str) -> str:
+    """
+    Given a valid URL, return it's content as string
+    """
     if not is_url_valid(url):
         raise InvalidFormatException("URL is not valid")
     try:
