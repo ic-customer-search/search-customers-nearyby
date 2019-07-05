@@ -29,3 +29,14 @@ LOG_LEVEL=DEBUG python app/main.py
 LOG_LEVEL=DEBUG python -m unittest discover -s app
 ```
 
+
+#### Configuration
+
+Certain variables are configurable in the app
+
+- SEARCH_RADIUS - Specifies the radius of search for the customer. Defaults to 100km 
+- SEARCH_CENTER_LAT, SEARCH_CENTER_LONG - Defaults to office address
+- CUSTOMER_RECORDS_FILE_URL - Defaults to the given file. 
+
+The above can be overriden by passing in the values for them in the environment var.
+Check `app/config.py` for more info.
