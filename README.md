@@ -4,7 +4,8 @@ The app runs customer search using greater circle distance formula and returns l
 
 ### Setup
 
-Below are the steps to run the code. Details are provided for two environment - Docker and Python
+Below are the steps to run the code. Details are provided for two environment - Docker and Python.
+
 All commands should be run from the root folder of the project.
 
 #### Docker Enviornment
