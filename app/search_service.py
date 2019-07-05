@@ -33,6 +33,9 @@ class SearchService:
         Loop over sorted list of customers and print the output
         """
         nearby_customers = self.get_sorted_customers()
+        if len(nearby_customers) == 0:
+            print("No customers found in the radius of %dkm" % self.search_radius)
+            return
         for customer in nearby_customers:
             print(customer)
 
@@ -40,6 +43,8 @@ class SearchService:
         """
         Return sorted list of customers based on user_id
         """
+        # We are making a copy of the min heap, so that we don't end up pop-ing actual results heap.
+        # If were to do that, we will be able to print the customer list only once.
         result_copy = list(self.search_results)
         sorted_customers = []
         while result_copy:

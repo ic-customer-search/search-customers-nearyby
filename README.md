@@ -1,4 +1,8 @@
-Intercom Interview Question Repo
+### Intro
+The app runs customer search using greater circle distance formula and returns list of users sorted by user_id. The output of the app can be found in output.txt at the top-level folder. The program can also handle streaming input.
+
+
+### Setup
 
 Below are the steps to run the code. Details are provided for two environment - Docker and Python
 All commands should be run from the root folder of the project.
@@ -30,7 +34,7 @@ LOG_LEVEL=DEBUG python -m unittest discover -s app
 ```
 
 
-#### Configuration
+### Configuration
 
 Certain variables are configurable in the app
 
@@ -40,3 +44,4 @@ Certain variables are configurable in the app
 
 The above can be overriden by passing in the values for them in the environment var.
 Check `app/config.py` for more info.
+
