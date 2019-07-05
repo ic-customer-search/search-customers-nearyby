@@ -38,11 +38,19 @@ class ParserTest(unittest.TestCase):
             self.assertDictEqual(parsed_customer_record[index], customer_record_dicts[index])
 
     def test_parse_invalid_customer_records(self):
-        customer_records = '{"latitude": "53.74452", "user_id": 29, "name": "Oliver Ahearn", "longitude": "-7.11167"}\n' \
-                           '{"latitude": "53.761389", "user_id": 30, "name": "Nick Enright", "longitude": "-7.2875"}\n' \
-                           '{"latitude": "54.080556", "user_id": 23, "name": "Eoin Gallagher", "longitude": ' \
-                           '"-6.361944"\n' \
-                           '{"latitude": "52.833502", "user_id": 25, "name": "David Behan", "longitude": ' \
-                           '"-8.522366"\n'
-        self.assertRaises(InvalidFormatException, parse_customer_records, customer_records)
+        with self.assertRaises(InvalidFormatException):
+            customer_records = '{"latitude": "53.74452", "user_id": 29, "name": "Oliver Ahearn", "longitude": "-7.11167"}\n' \
+                               '{"latitude": "53.761389", "user_id": 30, "name": "Nick Enright", "longitude": "-7.2875"}\n' \
+                               '{"latitude": "54.080556", "user_id": 23, "name": "Eoin Gallagher", "longitude": ' \
+                               '"-6.361944"\n' \
+                               '{"latitude": "52.833502", "user_id": 25, "name": "David Behan", "longitude": ' \
+                               '"-8.522366"\n'
+            parse_customer_records(customer_records)
+
+        with self.assertRaises(InvalidFormatException):
+            customer_records = '{"latitude": "53.74452", "user_id": 29, "name": "Oliver Ahearn", "longitude": "-7.11167"}\n' \
+                               '\n' \
+                               '' \
+                               '{"latitude": "53.761389", "user_id": 30, "name": "Nick Enright", "longitude": "-7.2875"}\n'
+            parse_customer_records(customer_records)
 

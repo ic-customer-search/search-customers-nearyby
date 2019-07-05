@@ -17,12 +17,15 @@ def parse_customer_records(customer_records_text: str) -> list:
         for record in records:
             if record.strip() != "" or record.strip() == "\n":
                 parsed.append(parse_json_from_string(record))
+            else:
+                raise InvalidFormatException("Record is empty")
         return parsed
     except json.decoder.JSONDecodeError as e:
-        logger.error("Parsing of customer records failed.")
-        logger.error(exception_to_str(e))
-        raise InvalidFormatException
+        raise InvalidFormatException(exception_to_str(e))
 
 
 def parse_json_from_string(stringified_json: str) -> dict:
+    if not stringified_json or stringified_json.strip() == "":
+        raise InvalidFormatException("String is null")
+
     return json.loads(stringified_json)

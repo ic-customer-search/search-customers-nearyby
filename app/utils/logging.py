@@ -1,8 +1,9 @@
 import logging
+import os
 
 
 def get_logger(name):
-    level = logging.DEBUG
+    level = os.getenv("LOG_LEVEL", logging.INFO)
     log_format = '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
     formatter = logging.Formatter(log_format)
 
