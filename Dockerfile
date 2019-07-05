@@ -12,4 +12,4 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["python", "search_customers.py"]
+CMD ["python", "main.py"]

@@ -17,15 +17,16 @@ class SearchService:
         self.search_center = search_center
         self.search_results = []
 
-    def add_customer(self, customer: Dict):
+    def add_customer(self, record: Dict):
         """
         Add a single customer to our search result if she is within the search radius.
         NOTE: This function can also be used for streaming input
         """
-        distance = get_customer_distance(Customer(customer), self.search_center)
-        # logger.debug("user_id: %, distance: %" % (customer["user_id"], distance))
+        customer = Customer(record)
+        distance = get_customer_distance(customer, self.search_center)
+        logger.debug("Distance for user_id %d, %s => %d km" % (customer.user_id, customer.name, distance))
         if distance < self.search_radius:
-            heappush(self.search_results, (customer["user_id"], customer))
+            heappush(self.search_results, customer)
 
     def print_nearby_customers(self):
         """
@@ -42,7 +43,7 @@ class SearchService:
         result_copy = list(self.search_results)
         sorted_customers = []
         while result_copy:
-            (user_id, customer) = heappop(result_copy)
+            customer = heappop(result_copy)
             sorted_customers.append(customer)
         return sorted_customers
 

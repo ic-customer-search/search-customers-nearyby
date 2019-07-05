@@ -1,3 +1,4 @@
+import json
 from typing import Dict
 
 from exceptions import InvalidFormatException
@@ -13,6 +14,18 @@ class Customer:
         self.lat = record["latitude"]
         self.long = record["longitude"]
         self.name = record["name"]
+
+    def __lt__(self, other):
+        return self.user_id < other.user_id
+
+    def __str__(self):
+        record = {
+            "latitude": self.lat,
+            "longitude": self.long,
+            "name": self.name,
+            "user_id": self.user_id
+        }
+        return json.dumps(record)
 
     @classmethod
     def validate(cls, record: Dict) -> bool:

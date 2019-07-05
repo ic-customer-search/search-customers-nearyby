@@ -40,7 +40,9 @@ class SearchServiceTest(unittest.TestCase):
         self.assertTrue(len(all_nearby_customers) == 3)
 
         sorted_customers_within_100 = sorted(self.customers_within_100, key=lambda x: x["user_id"])
-        self.assertEqual(all_nearby_customers, sorted_customers_within_100)
+        all_nearby_customers_user_id = [customer.user_id for customer in all_nearby_customers]
+        for i, record in enumerate(sorted_customers_within_100):
+            self.assertEqual(all_nearby_customers_user_id[i], record["user_id"])
 
     def test_search_service_using_file(self):
         # The below file is being treated as test data. It should never change or else, it will break the tests.
@@ -55,4 +57,4 @@ class SearchServiceTest(unittest.TestCase):
         self.assertTrue(total_nearby_customers == 16)
 
         for i in range(1, total_nearby_customers):
-            self.assertTrue(all_nearby_customers[i-1]["user_id"] < all_nearby_customers[i]["user_id"])
+            self.assertTrue(all_nearby_customers[i-1].user_id < all_nearby_customers[i].user_id)
