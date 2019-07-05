@@ -22,14 +22,20 @@ class ParserTest(unittest.TestCase):
     def test_parse_valid_customer_records(self):
         customer_records = '{"latitude": "53.74452", "user_id": 29, "name": "Oliver Ahearn", "longitude": "-7.11167"}\n' \
                             '{"latitude": "53.761389", "user_id": 30, "name": "Nick Enright", "longitude": "-7.2875"}\n' \
-                            '{"latitude": "54.080556", "user_id": 23, "name": "Eoin Gallagher", "longitude": ' \
+                            '{"latitude": "54.080556", "user_id": 0, "name": "Eoin Gallagher", "longitude": ' \
                             '"-6.361944"}\n' \
-                            '{"latitude": "52.833502", "user_id": 25, "name": "David Behan", "longitude": ' \
+                            '{"latitude": "52.833502", "user_id": 25, "name": "", "longitude": ' \
                            '"-8.522366"}\n'
         parsed_customer_record = parse_customer_records(customer_records)
         self.assertEqual(type(parsed_customer_record), list)
         self.assertEqual(len(parsed_customer_record), 4)
-        self.assertEqual(parsed_customer_record[2]["user_id"], 23)
+
+        customer_record_dicts = [{"latitude": "53.74452", "user_id": 29, "name": "Oliver Ahearn", "longitude": "-7.11167"},
+                             {"latitude": "53.761389", "user_id": 30, "name": "Nick Enright", "longitude": "-7.2875"},
+                             {"latitude": "54.080556", "user_id": 0, "name": "Eoin Gallagher", "longitude": "-6.361944"},
+                             {"latitude": "52.833502", "user_id": 25, "name": "", "longitude": "-8.522366"}]
+        for index, parsed_record in enumerate(parsed_customer_record):
+            self.assertDictEqual(parsed_customer_record[index], customer_record_dicts[index])
 
     def test_parse_invalid_customer_records(self):
         customer_records = '{"latitude": "53.74452", "user_id": 29, "name": "Oliver Ahearn", "longitude": "-7.11167"}\n' \
