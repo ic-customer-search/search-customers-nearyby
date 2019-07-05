@@ -1,4 +1,4 @@
-### Intro
+### Introduction
 The app runs customer search using greater circle distance formula and returns list of users sorted by user_id. The output of the app can be found in `output.txt` at the top-level folder. The program can also handle streaming input.
 
 
