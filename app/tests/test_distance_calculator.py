@@ -1,5 +1,6 @@
 import unittest
 
+from customer import Customer
 from exceptions import InvalidFormatException
 from utils.distance_calculator import get_arc_length, get_customer_distance
 
@@ -19,32 +20,20 @@ class DistanceCalculatorTest(unittest.TestCase):
         self.assertEqual(round(get_arc_length(radius, point_1, point_2), 1), 161.4)
 
     def test_get_customer_distance_for_valid_customer(self):
-        customer_dict = {"latitude": "52.833502", "user_id": 29, "name": "Oliver Ahearn", "longitude": "-8.522366"}
+        record = {"latitude": "52.833502", "user_id": 29, "name": "Oliver Ahearn", "longitude": "-8.522366"}
+        customer = Customer(record)
         center = [53.339428, -6.257664]
-        distance = get_customer_distance(customer_dict, center)
+        distance = get_customer_distance(customer, center)
         self.assertEqual(distance, 161)
 
-    def test_get_customer_distance_for_invalid_customer(self):
-        center = [53.339428, -6.257664]
+    def test_get_customer_distance_for_invalid_data(self):
 
         with self.assertRaises(InvalidFormatException):
-            invalid_customer_dict = {}
-            get_customer_distance(invalid_customer_dict, center)
+            center = [53.339428, -6.257664]
+            invalid_customer_data = {}
+            get_customer_distance(Customer(invalid_customer_data), center)
 
         with self.assertRaises(InvalidFormatException):
-            invalid_customer_dict = {"latitude": "53.22"}
-            get_customer_distance(invalid_customer_dict, center)
-
-        with self.assertRaises(InvalidFormatException):
-            invalid_customer_dict = {"latitude": "", "longitude": ""}
-            get_customer_distance(invalid_customer_dict, center)
-
-        with self.assertRaises(InvalidFormatException):
-            invalid_customer_dict = {"longitude": "50"}
-            get_customer_distance(invalid_customer_dict, center)
-
-        with self.assertRaises(InvalidFormatException):
-            valid_customer_dict = {"latitude": "52.833502", "user_id": 29, "name": "Oliver Ahearn", "longitude": "-8.522366"}
-            get_customer_distance(valid_customer_dict, [])
-
-
+            invalid_center = []
+            valid_record = {"latitude": "52.833502", "user_id": 29, "name": "Oliver Ahearn", "longitude": "-8.522366"}
+            get_customer_distance(Customer(valid_record), invalid_center)

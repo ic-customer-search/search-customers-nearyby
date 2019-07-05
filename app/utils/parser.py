@@ -11,7 +11,7 @@ def parse_customer_records(customer_records_text: str) -> list:
     """
     Parse a blob of string for customer records. Customer records are expected to be delimited by new line character
     """
-    records = customer_records_text.split("\n")
+    records = customer_records_text.strip().split("\n")
     parsed = []
     try:
         for record in records:

@@ -1,6 +1,7 @@
 from math import acos, radians, sin, cos
 from typing import List
 
+from customer import Customer
 from exceptions import InvalidFormatException
 
 
@@ -28,15 +29,10 @@ def get_arc_length(radius, point_1, point_2):
     return radius * central_angle
 
 
-def get_customer_distance(customer_dict: dict, point: List[int], radius=6371) -> int:
-    if "latitude" not in customer_dict or customer_dict["latitude"].strip() == "" \
-            or "longitude" not in customer_dict \
-            or customer_dict["longitude"].strip() == "":
-        raise InvalidFormatException("Customer dict is missing latitude or longitude")
-
+def get_customer_distance(customer: Customer, point: List[int], radius=6371) -> int:
     if type(point) is not list or len(point) != 2:
         raise InvalidFormatException("Point object should be a list object of size 2")
 
-    customer_location = [float(customer_dict["latitude"]),
-                         float(customer_dict["longitude"])]
+    customer_location = [float(customer.lat),
+                         float(customer.long)]
     return round(get_arc_length(radius, customer_location, point), 0)
