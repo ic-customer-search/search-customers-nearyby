@@ -1,8 +1,9 @@
 import json
 import unittest
 
+from exceptions import InvalidFormatException
 from utils.logging import get_logger
-from utils.parser import parse_json_from_string, parse_customer_record
+from utils.parser import parse_json_from_string, parse_customer_records
 
 logger = get_logger(__name__)
 
@@ -18,15 +19,24 @@ class ParserTest(unittest.TestCase):
         parsed = parse_json_from_string(json_string)
         self.assertEqual(type(parsed), dict)
 
-    def test_parse_customer_records(self):
+    def test_parse_valid_customer_records(self):
         customer_records = '{"latitude": "53.74452", "user_id": 29, "name": "Oliver Ahearn", "longitude": "-7.11167"}\n' \
                             '{"latitude": "53.761389", "user_id": 30, "name": "Nick Enright", "longitude": "-7.2875"}\n' \
                             '{"latitude": "54.080556", "user_id": 23, "name": "Eoin Gallagher", "longitude": ' \
                             '"-6.361944"}\n' \
                             '{"latitude": "52.833502", "user_id": 25, "name": "David Behan", "longitude": ' \
-                           '"-8.522366"}\n '
-        parsed_customer_record = parse_customer_record(customer_records)
+                           '"-8.522366"}\n'
+        parsed_customer_record = parse_customer_records(customer_records)
         self.assertEqual(type(parsed_customer_record), list)
         self.assertEqual(len(parsed_customer_record), 4)
-        self.assertEqual(parsed_customer_record[2]["user_id"], 30)
+        self.assertEqual(parsed_customer_record[2]["user_id"], 23)
+
+    def test_parse_invalid_customer_records(self):
+        customer_records = '{"latitude": "53.74452", "user_id": 29, "name": "Oliver Ahearn", "longitude": "-7.11167"}\n' \
+                           '{"latitude": "53.761389", "user_id": 30, "name": "Nick Enright", "longitude": "-7.2875"}\n' \
+                           '{"latitude": "54.080556", "user_id": 23, "name": "Eoin Gallagher", "longitude": ' \
+                           '"-6.361944"\n' \
+                           '{"latitude": "52.833502", "user_id": 25, "name": "David Behan", "longitude": ' \
+                           '"-8.522366"\n'
+        self.assertRaises(InvalidFormatException, parse_customer_records, customer_records)
 
